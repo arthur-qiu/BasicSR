@@ -1,5 +1,5 @@
 {
-  "name": "debug_002_RRDB_ESRGAN_x4_DIV2K" //  please remove "debug_" during training
+  "name": "RRDB_ESRGAN_x4_DIV2K" //  please remove "debug_" during training
   , "use_tb_logger": true
   , "model":"srragan"
   , "scale": 4
@@ -9,8 +9,8 @@
     "train": {
       "name": "DIV2K"
       , "mode": "LRHR"
-      , "dataroot_HR": "/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub.lmdb"
-      , "dataroot_LR": "/mnt/SSD/xtwang/BasicSR_datasets/DIV2K800/DIV2K800_sub_bicLRx4.lmdb"
+      , "dataroot_HR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_train_HR_crop.lmdb"
+      , "dataroot_LR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_train_HR_crop_bicLRx4.lmdb"
       , "subset_file": null
       , "use_shuffle": true
       , "n_workers": 8
@@ -22,14 +22,14 @@
     , "val": {
       "name": "val_set14_part"
       , "mode": "LRHR"
-      , "dataroot_HR": "/mnt/SSD/xtwang/BasicSR_datasets/val_set14_part/Set14"
-      , "dataroot_LR": "/mnt/SSD/xtwang/BasicSR_datasets/val_set14_part/Set14_bicLRx4"
+      , "dataroot_HR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_crop.lmdb"
+      , "dataroot_LR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_crop_bicLRx4.lmdb"
     }
   }
 
   , "path": {
-    "root": "/home/xtwang/Projects/BasicSR"
-    , "pretrain_model_G": "../experiments/pretrained_models/RRDB_PSNR_x4.pth"
+    "root": "/mnt/lustre21/qiuhaonan/BasicSR"
+    , "pretrain_model_G": ""
   }
 
   , "network_G": {
