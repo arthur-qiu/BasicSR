@@ -1,7 +1,7 @@
 {
-  "name": "RRDB_ESRGAN_x4_DIV2K" //  please remove "debug_" during training
+  "name": "RRDB_AFLGAN_x4_DIV2K" //  please remove "debug_" during training
   , "use_tb_logger": true
-  , "model":"srragan"
+  , "model":"aflgan"
   , "scale": 4
   , "gpu_ids": [0]
 

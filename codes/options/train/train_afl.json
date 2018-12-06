@@ -29,7 +29,7 @@
 
   , "path": {
     "root": "/mnt/lustre21/qiuhaonan/BasicSR"
-    , "pretrain_model_G": null
+    , "pretrain_model_G": "null"
   }
 
   , "network_G": {
