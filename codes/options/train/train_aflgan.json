@@ -7,7 +7,7 @@
 
   , "datasets": {
     "train": {
-      "name": "DIV2K"
+      "name": "DIV2K_train"
       , "mode": "LRHR"
       , "dataroot_HR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_train_HR_crop.lmdb"
       , "dataroot_LR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_train_HR_crop_bicLRx4.lmdb"
@@ -20,7 +20,7 @@
       , "use_rot": true
     }
     , "val": {
-      "name": "val_set14_part"
+      "name": "DIV2K_valid"
       , "mode": "LRHR"
       , "dataroot_HR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_crop.lmdb"
       , "dataroot_LR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_crop_bicLRx4.lmdb"
@@ -33,7 +33,7 @@
   }
 
   , "network_G": {
-    "which_model_G": "RRDB_net" // RRDB_net | sr_resnet
+    "which_model_G": "RRDB_net_afl" // RRDB_net | sr_resnet
     , "norm_type": null
     , "mode": "CNA"
     , "nf": 64
@@ -44,7 +44,7 @@
     , "group": 1
   }
   , "network_D": {
-    "which_model_D": "discriminator_vgg_128"
+    "which_model_D": "discriminator_vgg_128_afl"
     , "norm_type": "batch"
     , "act_type": "leakyrelu"
     , "mode": "CNA"

@@ -96,6 +96,12 @@ def define_G(opt):
         netG = arch.RRDBNet(in_nc=opt_net['in_nc'], out_nc=opt_net['out_nc'], nf=opt_net['nf'],
             nb=opt_net['nb'], gc=opt_net['gc'], upscale=opt_net['scale'], norm_type=opt_net['norm_type'],
             act_type='leakyrelu', mode=opt_net['mode'], upsample_mode='upconv')
+
+    elif which_model == 'RRDB_net_afl':  # RRDB
+        netG = arch.RRDB_AFLNet(in_nc=opt_net['in_nc'], out_nc=opt_net['out_nc'], nf=opt_net['nf'],
+            nb=opt_net['nb'], gc=opt_net['gc'], upscale=opt_net['scale'], norm_type=opt_net['norm_type'],
+            act_type='leakyrelu', mode=opt_net['mode'], upsample_mode='upconv')
+
     else:
         raise NotImplementedError('Generator model [{:s}] not recognized'.format(which_model))
 
@@ -115,6 +121,10 @@ def define_D(opt):
 
     if which_model == 'discriminator_vgg_128':
         netD = arch.Discriminator_VGG_128(in_nc=opt_net['in_nc'], base_nf=opt_net['nf'], \
+            norm_type=opt_net['norm_type'], mode=opt_net['mode'], act_type=opt_net['act_type'])
+
+    elif which_model == 'discriminator_vgg_128_afl':
+        netD = arch.Discriminator_VGG_128_AFL(in_nc=opt_net['in_nc'], base_nf=opt_net['nf'], \
             norm_type=opt_net['norm_type'], mode=opt_net['mode'], act_type=opt_net['act_type'])
 
     elif which_model == 'dis_acd':  # sft-gan, Auxiliary Classifier Discriminator
@@ -152,3 +162,14 @@ def define_F(opt, use_bn=False):
         netF = nn.DataParallel(netF)
     netF.eval()  # No need to train
     return netF
+
+def define_B(opt):
+    gpu_ids = opt['gpu_ids']
+    opt_Gnet = opt['network_G']
+    opt_Dnet = opt['network_D']
+    netB = arch.BackFeeder(in_nc=opt_Dnet['nf']*4,base_nf=opt_Dnet['nf']*2,out_nc=opt_Gnet['nf'])
+
+    init_weights(netB, init_type='kaiming', scale=1)
+    if gpu_ids:
+        netB = nn.DataParallel(netB)
+    return netB
