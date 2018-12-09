@@ -88,6 +88,10 @@ class AFLGANModel(BaseModel):
                 weight_decay=wd_D, betas=(train_opt['beta1_D'], 0.999))
             self.optimizers.append(self.optimizer_D)
 
+            self.optimizer_B = torch.optim.Adam(self.netB.parameters(), lr=train_opt['lr_D'], \
+                                                weight_decay=wd_D, betas=(train_opt['beta1_D'], 0.999))
+            self.optimizers.append(self.optimizer_B)
+
             # schedulers
             if train_opt['lr_scheme'] == 'MultiStepLR':
                 for optimizer in self.optimizers:
