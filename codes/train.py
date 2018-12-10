@@ -73,7 +73,10 @@ def main():
 
             # training
             model.feed_data(train_data)
-            model.optimize_parameters(current_step)
+            if opt['train']['which_state'] == None:
+                model.optimize_parameters(current_step)
+            else:
+                model.optimize_parameters(current_step, opt['train']['which_state'])
 
             time_elapsed = time.time() - start_time
             start_time = time.time()

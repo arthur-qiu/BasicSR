@@ -116,12 +116,13 @@ class AFLGANModel(BaseModel):
             input_ref = data['ref'] if 'ref' in data else data['HR']
             self.var_ref = input_ref.to(self.device)
 
-    def optimize_parameters(self, step):
+    def optimize_parameters(self, step, train_opt = 'a'):
         # G
         for p in self.netD.parameters():
             p.requires_grad = False
 
         self.optimizer_G.zero_grad()
+        self.optimizer_B.zero_grad()
 
         self.fake_H = self.netG(self.var_L)
         self.pred_d, self.back_d = self.netD(self.fake_H.detach())
@@ -147,7 +148,10 @@ class AFLGANModel(BaseModel):
             l_g_total += l_g_gan
 
             l_g_total.backward()
-            self.optimizer_G.step()
+            if train_opt['which_state'] == 'a':
+                self.optimizer_G.step()
+            else:
+                self.optimizer_B.step()
 
         # D
         for p in self.netD.parameters():

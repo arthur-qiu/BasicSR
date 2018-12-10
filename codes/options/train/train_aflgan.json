@@ -70,6 +70,8 @@
     , "gan_type": "vanilla"
     , "gan_weight": 5e-3
 
+    , "which_state": "b"  // a / b
+
     //for wgan-gp
     // , "D_update_ratio": 1
     // , "D_init_iters": 0
