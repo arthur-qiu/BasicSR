@@ -116,7 +116,7 @@ class AFLGANModel(BaseModel):
             input_ref = data['ref'] if 'ref' in data else data['HR']
             self.var_ref = input_ref.to(self.device)
 
-    def optimize_parameters(self, step, train_opt = 'a'):
+    def optimize_parameters(self, step, state_opt = 'a'):
         # G
         for p in self.netD.parameters():
             p.requires_grad = False
@@ -141,14 +141,15 @@ class AFLGANModel(BaseModel):
                 l_g_total += l_g_fea
             # G gan + cls loss
             pred_g_fake, back_d_fake = self.netD(self.fake_H)
-            pred_d_real, back_d_real = self.netD(self.var_ref).detach()
+            pred_d_real, back_d_real = self.netD(self.var_ref)
+            pred_d_real = pred_d_real.detach()
 
             l_g_gan = self.l_gan_w * (self.cri_gan(pred_d_real - torch.mean(pred_g_fake), False) +
                                       self.cri_gan(pred_g_fake - torch.mean(pred_d_real), True)) / 2
             l_g_total += l_g_gan
 
             l_g_total.backward()
-            if train_opt['which_state'] == 'a':
+            if state_opt == 'a':
                 self.optimizer_G.step()
             else:
                 self.optimizer_B.step()
@@ -200,12 +201,16 @@ class AFLGANModel(BaseModel):
 
     def test(self):
         self.netG.eval()
+        self.netD.eval()
+        self.netB.eval()
         with torch.no_grad():
             self.fake_H = self.netG(self.var_L)
             self.pred_d, self.back_d = self.netD(self.fake_H.detach())
             self.back_b = self.netB(self.back_d)
             self.fake_H = self.netG(self.var_L, self.back_b, 0.2)
         self.netG.train()
+        self.netD.train()
+        self.netB.train()
 
     def get_current_log(self):
         return self.log_dict

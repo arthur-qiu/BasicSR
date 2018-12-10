@@ -1,5 +1,5 @@
 {
-  "name": "RRDB_AFLGANadd_x4_DIV2K" //  please remove "debug_" during training
+  "name": "RRDB_AFLGAN_x4_DIV2K" //  please remove "debug_" during training
   , "use_tb_logger": true
   , "model":"aflgan"
   , "scale": 4
@@ -22,15 +22,14 @@
     , "val": {
       "name": "DIV2K_valid"
       , "mode": "LRHR"
-      , "dataroot_HR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_128.lmdb"
-      , "dataroot_LR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_128_bicLRx4.lmdb"
+      , "dataroot_HR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_crop.lmdb"
+      , "dataroot_LR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_crop_bicLRx4.lmdb"
     }
   }
 
   , "path": {
     "root": "/mnt/lustre21/qiuhaonan/BasicSR"
-    , "pretrain_model_G": "../experiments/pretrained_models/RRDB_PSNR_x4.pth",
-    , "pretrain_model_D": "../experiments/pretrained_models/RRDB_PSNR_x4.pth"
+    , "pretrain_model_G": null
   }
 
   , "network_G": {
@@ -71,7 +70,7 @@
     , "gan_type": "vanilla"
     , "gan_weight": 5e-3
 
-    , "which_state": "b"  // a / b
+    , "which_state": "a"  // a / b
 
     //for wgan-gp
     // , "D_update_ratio": 1

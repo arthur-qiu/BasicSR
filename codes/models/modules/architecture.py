@@ -128,7 +128,7 @@ class RRDB_AFLNet(nn.Module):
 # VGG style Discriminator with input size 128*128
 class Discriminator_VGG_128_AFL(nn.Module):
     def __init__(self, in_nc, base_nf, norm_type='batch', act_type='leakyrelu', mode='CNA'):
-        super(Discriminator_VGG_128, self).__init__()
+        super(Discriminator_VGG_128_AFL, self).__init__()
         # features
         # hxw, c
         # 128, 64
