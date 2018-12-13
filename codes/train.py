@@ -73,10 +73,7 @@ def main():
 
             # training
             model.feed_data(train_data)
-            if opt['train']['which_state'] == None:
-                model.optimize_parameters(current_step)
-            else:
-                model.optimize_parameters(current_step, opt['train']['which_state'])
+            model.optimize_parameters(current_step)
 
             time_elapsed = time.time() - start_time
             start_time = time.time()
@@ -123,6 +120,20 @@ def main():
                     save_img_path = os.path.join(img_dir, '{:s}_{:d}.png'.format(\
                         img_name, current_step))
                     util.save_img(sr_img, save_img_path)
+
+                    if opt['train']['which_state'] == 'b':
+                        sr1_img = util.tensor2img(visuals['SR1'])  # uint8
+                        sr2_img = util.tensor2img(visuals['SR2'])  # uint8
+                        sr3_img = util.tensor2img(visuals['SR3'])  # uint8
+                        save_img_path1 = os.path.join(img_dir, '{:s}_{:d}.png'.format( \
+                            img_name + '_loop1', current_step))
+                        save_img_path2 = os.path.join(img_dir, '{:s}_{:d}.png'.format( \
+                            img_name + '_loop2', current_step))
+                        save_img_path3 = os.path.join(img_dir, '{:s}_{:d}.png'.format( \
+                            img_name + '_loop3', current_step))
+                        util.save_img(sr1_img, save_img_path1)
+                        util.save_img(sr1_img, save_img_path2)
+                        util.save_img(sr1_img, save_img_path3)
 
                     # calculate PSNR
                     crop_size = opt['scale']

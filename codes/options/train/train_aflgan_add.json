@@ -29,8 +29,8 @@
 
   , "path": {
     "root": "/mnt/lustre21/qiuhaonan/BasicSR"
-    , "pretrain_model_G": "../experiments/pretrained_models/RRDB_PSNR_x4.pth",
-    , "pretrain_model_D": "../experiments/pretrained_models/RRDB_PSNR_x4.pth"
+    , "pretrain_model_G": "../experiments/RRDB_AFLGAN_x4_DIV2K/models/5000_G.pth"
+    , "pretrain_model_D": "../experiments/RRDB_AFLGAN_x4_DIV2K/models/5000_D.pth"
   }
 
   , "network_G": {

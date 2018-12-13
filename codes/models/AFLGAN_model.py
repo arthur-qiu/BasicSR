@@ -14,6 +14,7 @@ class AFLGANModel(BaseModel):
     def __init__(self, opt):
         super(AFLGANModel, self).__init__(opt)
         train_opt = opt['train']
+        self.state_opt = self.opt['train']['which_state']
 
         # define networks and load pretrained models
         self.netG = networks.define_G(opt).to(self.device)  # G
@@ -116,7 +117,8 @@ class AFLGANModel(BaseModel):
             input_ref = data['ref'] if 'ref' in data else data['HR']
             self.var_ref = input_ref.to(self.device)
 
-    def optimize_parameters(self, step, state_opt = 'a'):
+    def optimize_parameters(self, step):
+
         # G
         for p in self.netD.parameters():
             p.requires_grad = False
@@ -125,9 +127,10 @@ class AFLGANModel(BaseModel):
         self.optimizer_B.zero_grad()
 
         self.fake_H = self.netG(self.var_L)
-        self.pred_d, self.back_d = self.netD(self.fake_H.detach())
-        self.back_b = self.netB(self.back_d)
-        self.fake_H = self.netG(self.var_L, self.back_b, 0.2)
+        if self.state_opt == 'b':
+            self.pred_d, self.back_d = self.netD(self.fake_H.detach())
+            self.back_b = self.netB(self.back_d)
+            self.fake_H = self.netG(self.var_L, self.back_b, 0.2)
 
         l_g_total = 0
         if step % self.D_update_ratio == 0 and step > self.D_init_iters:
@@ -149,10 +152,40 @@ class AFLGANModel(BaseModel):
             l_g_total += l_g_gan
 
             l_g_total.backward()
-            if state_opt == 'a':
+            if self.state_opt == 'a':
                 self.optimizer_G.step()
             else:
                 self.optimizer_B.step()
+
+                for i in range(3):
+                    self.optimizer_B.zero_grad()
+
+                    self.pred_d, self.back_d = self.netD(self.fake_H.detach())
+                    self.back_b = self.netB(self.back_d)
+                    self.fake_H = self.netG(self.var_L, self.back_b, 0.2)
+
+                    l_g_total = 0
+                    if step % self.D_update_ratio == 0 and step > self.D_init_iters:
+                        if self.cri_pix:  # pixel loss
+                            l_g_pix = self.l_pix_w * self.cri_pix(self.fake_H, self.var_H)
+                            l_g_total += l_g_pix
+                        if self.cri_fea:  # feature loss
+                            real_fea = self.netF(self.var_H).detach()
+                            fake_fea = self.netF(self.fake_H)
+                            l_g_fea = self.l_fea_w * self.cri_fea(fake_fea, real_fea)
+                            l_g_total += l_g_fea
+                        # G gan + cls loss
+                        pred_g_fake, back_d_fake = self.netD(self.fake_H)
+                        pred_d_real, back_d_real = self.netD(self.var_ref)
+                        pred_d_real = pred_d_real.detach()
+
+                        l_g_gan = self.l_gan_w * (self.cri_gan(pred_d_real - torch.mean(pred_g_fake), False) +
+                                                  self.cri_gan(pred_g_fake - torch.mean(pred_d_real), True)) / 2
+                        l_g_total += l_g_gan
+
+                        l_g_total.backward()
+                        self.optimizer_B.step()
+
 
         # D
         for p in self.netD.parameters():
@@ -205,9 +238,20 @@ class AFLGANModel(BaseModel):
         self.netB.eval()
         with torch.no_grad():
             self.fake_H = self.netG(self.var_L)
-            self.pred_d, self.back_d = self.netD(self.fake_H.detach())
-            self.back_b = self.netB(self.back_d)
-            self.fake_H = self.netG(self.var_L, self.back_b, 0.2)
+
+            if self.state_opt == 'b':
+                self.pred_d1, self.back_d1 = self.netD(self.fake_H.detach())
+                self.back_b1 = self.netB(self.back_d1)
+                self.fake_H1 = self.netG(self.var_L, self.back_b1, 0.2)
+
+                self.pred_d2, self.back_d2 = self.netD(self.fake_H1.detach())
+                self.back_b2 = self.netB(self.back_d2)
+                self.fake_H2 = self.netG(self.var_L, self.back_b2, 0.2)
+
+                self.pred_d3, self.back_d3 = self.netD(self.fake_H2.detach())
+                self.back_b3 = self.netB(self.back_d3)
+                self.fake_H3 = self.netG(self.var_L, self.back_b3, 0.2)
+
         self.netG.train()
         self.netD.train()
         self.netB.train()
@@ -219,6 +263,10 @@ class AFLGANModel(BaseModel):
         out_dict = OrderedDict()
         out_dict['LR'] = self.var_L.detach()[0].float().cpu()
         out_dict['SR'] = self.fake_H.detach()[0].float().cpu()
+        if self.state_opt == 'b':
+            out_dict['SR1'] = self.fake_H1.detach()[0].float().cpu()
+            out_dict['SR2'] = self.fake_H2.detach()[0].float().cpu()
+            out_dict['SR3'] = self.fake_H3.detach()[0].float().cpu()
         if need_HR:
             out_dict['HR'] = self.var_H.detach()[0].float().cpu()
         return out_dict
