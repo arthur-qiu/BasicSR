@@ -11,6 +11,8 @@ def create_model(opt):
         from .SFTGAN_ACD_model import SFTGAN_ACD_Model as M
     elif model == 'aflgan':
         from .AFLGAN_model import AFLGANModel as M
+    elif model == 'srafl':
+        from .SRAFL_model import SRAFLModel as M
     else:
         raise NotImplementedError('Model [{:s}] not recognized.'.format(model))
     m = M(opt)

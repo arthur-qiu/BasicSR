@@ -132,8 +132,8 @@ def main():
                         save_img_path3 = os.path.join(img_dir, '{:s}_{:d}.png'.format( \
                             img_name + '_loop3', current_step))
                         util.save_img(sr1_img, save_img_path1)
-                        util.save_img(sr1_img, save_img_path2)
-                        util.save_img(sr1_img, save_img_path3)
+                        util.save_img(sr2_img, save_img_path2)
+                        util.save_img(sr3_img, save_img_path3)
 
                     # calculate PSNR
                     crop_size = opt['scale']
