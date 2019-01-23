@@ -1,9 +1,9 @@
 {
-  "name": "AFLGAN_x4_DIV2K" //  please remove "debug_" during training
+  "name": "AFLfinetune_x4_DIV2K" //  please remove "debug_" during training
   , "use_tb_logger": true
   , "model":"aflgan"
   , "scale": 4
-  , "gpu_ids": [0]
+  , "gpu_ids": [0, 1]
 
   , "datasets": {
     "train": {
@@ -29,7 +29,7 @@
 
   , "path": {
     "root": "/mnt/lustre21/qiuhaonan/BasicSR"
-    , "pretrain_model_G": null
+    , "pretrain_model_G": "../experiments/AFLPSNR_x4_DIV2K/models/160000_G.pth"
   }
 
   , "network_G": {
@@ -70,7 +70,7 @@
     , "gan_type": "vanilla"
     , "gan_weight": 5e-3
 
-    , "which_state": "a"  // a / b
+    , "which_state": "b"  // a / b
 
     //for wgan-gp
     // , "D_update_ratio": 1

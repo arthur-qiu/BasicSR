@@ -1,9 +1,9 @@
 {
-  "name": "AFLGAN_x4_DIV2K" //  please remove "debug_" during training
+  "name": "AFLfinetunetrue_x4_DIV2K" //  please remove "debug_" during training
   , "use_tb_logger": true
   , "model":"aflgan"
   , "scale": 4
-  , "gpu_ids": [0]
+  , "gpu_ids": [0, 1]
 
   , "datasets": {
     "train": {
@@ -29,7 +29,7 @@
 
   , "path": {
     "root": "/mnt/lustre21/qiuhaonan/BasicSR"
-    , "pretrain_model_G": null
+    , "pretrain_model_G": "../experiments/AFLPSNR_x4_DIV2K/models/160000_G.pth"
   }
 
   , "network_G": {

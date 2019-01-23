@@ -3,9 +3,9 @@ function generate_mod_LR_bic()
 
 %% set parameters
 % comment the unnecessary line
-input_folder = '/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_crop';
+input_folder = '/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_20small';
 % save_mod_folder = '';
-save_LR_folder = '/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_crop_bicLRx4';
+save_LR_folder = '/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_20small_bicLRx4';
 % save_bic_folder = '';
 
 up_scale = 4;

@@ -10,11 +10,11 @@ from utils.progress_bar import ProgressBar
 
 def main():
     """A multi-thread tool to crop sub imags."""
-    input_folder = '/mnt/lustre21/qiuhaonan/srdata/Flickr2K'
-    save_folder = '/mnt/lustre21/qiuhaonan/srdata/Flickr2K_crop'
+    input_folder = '/mnt/lustre21/qiuhaonan/2019sr/TrainLR'
+    save_folder = '/mnt/lustre21/qiuhaonan/2019sr/train+lrsub'
     n_thread = 20
-    crop_sz = 480
-    step = 240
+    crop_sz = 192 #128
+    step = 96 #64
     thres_sz = 48
     compression_level = 3  # 3 is the default value in cv2
     # CV_IMWRITE_PNG_COMPRESSION from 0 to 9. A higher value means a smaller size and longer

@@ -1,5 +1,5 @@
 {
-  "name": "RRDB_AFLGAN_x4_DIV2K" //  please remove "debug_" during training
+  "name": "AFLPSNR_x4_DIV2K" //  please remove "debug_" during training
   , "use_tb_logger": true
   , "model":"srafl"
   , "scale": 4

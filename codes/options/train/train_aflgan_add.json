@@ -1,5 +1,5 @@
 {
-  "name": "RRDB_AFLGANadd_x4_DIV2K" //  please remove "debug_" during training
+  "name": "AFLGANadd_x4_DIV2K" //  please remove "debug_" during training
   , "use_tb_logger": true
   , "model":"aflgan"
   , "scale": 4
@@ -22,15 +22,15 @@
     , "val": {
       "name": "DIV2K_valid"
       , "mode": "LRHR"
-      , "dataroot_HR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_128.lmdb"
-      , "dataroot_LR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_128_bicLRx4.lmdb"
+      , "dataroot_HR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_20small.lmdb"
+      , "dataroot_LR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_20small_bicLRx4.lmdb"
     }
   }
 
   , "path": {
     "root": "/mnt/lustre21/qiuhaonan/BasicSR"
-    , "pretrain_model_G": "../experiments/RRDB_AFLGAN_x4_DIV2K/models/5000_G.pth"
-    , "pretrain_model_D": "../experiments/RRDB_AFLGAN_x4_DIV2K/models/5000_D.pth"
+    , "pretrain_model_G": "../experiments/AFLGAN_x4_DIV2K/models/110000_G.pth"
+    , "pretrain_model_D": "../experiments/AFLGAN_x4_DIV2K/models/110000_D.pth"
   }
 
   , "network_G": {

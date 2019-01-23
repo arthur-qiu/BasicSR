@@ -1,9 +1,9 @@
 {
-  "name": "AFLGAN_x4_DIV2K" //  please remove "debug_" during training
+  "name": "2019SR_Before" //  please remove "debug_" during training
   , "use_tb_logger": true
   , "model":"aflgan"
-  , "scale": 4
-  , "gpu_ids": [0]
+  , "scale": 1
+  , "gpu_ids": [0, 1]
 
   , "datasets": {
     "train": {
@@ -22,8 +22,8 @@
     , "val": {
       "name": "DIV2K_valid"
       , "mode": "LRHR"
-      , "dataroot_HR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_20small.lmdb"
-      , "dataroot_LR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_20small_bicLRx4.lmdb"
+      , "dataroot_HR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_128.lmdb"
+      , "dataroot_LR": "/mnt/lustre21/qiuhaonan/srdata/DIV2K_valid_HR_128_bicLRx4.lmdb"
     }
   }
 
