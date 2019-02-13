@@ -11,10 +11,6 @@ def create_model(opt):
         from .SFTGAN_ACD_model import SFTGAN_ACD_Model as M
     elif model == 'aflgan':
         from .AFLGAN_model import AFLGANModel as M
-    elif model == 'aflgan1':
-        from .AFLGAN1_model import AFLGAN1Model as M
-    elif model == 'aflgan2':
-        from .AFLGAN2_model import AFLGAN2Model as M
     elif model == 'srafl':
         from .SRAFL_model import SRAFLModel as M
     else:
