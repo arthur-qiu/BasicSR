@@ -1,9 +1,9 @@
 {
-  "name": "2019SR_Before" //  please remove "debug_" during training
+  "name": "AFLPSNR_x1" //  please remove "debug_" during training
   , "use_tb_logger": true
-  , "model":"aflgan"
+  , "model":"srafl"
   , "scale": 1
-  , "gpu_ids": [0, 1]
+  , "gpu_ids": [0,1]
 
   , "datasets": {
     "train": {
@@ -13,8 +13,8 @@
       , "dataroot_LR": "/mnt/lustrenew/qiuhaonan/2019sr/train_lrsub"
       , "subset_file": null
       , "use_shuffle": true
-      , "n_workers": 2
-      , "batch_size": 2
+      , "n_workers": 4
+      , "batch_size": 4
       , "HR_size": 128
       , "use_flip": true
       , "use_rot": true
@@ -43,43 +43,18 @@
     , "gc": 32
     , "group": 1
   }
-  , "network_D": {
-    "which_model_D": "discriminator_vgg_128_afl"
-    , "norm_type": "batch"
-    , "act_type": "leakyrelu"
-    , "mode": "CNA"
-    , "nf": 64
-    , "in_nc": 3
-  }
-
   , "train": {
-    "lr_G": 1e-4
-    , "weight_decay_G": 0
-    , "beta1_G": 0.9
-    , "lr_D": 1e-4
-    , "weight_decay_D": 0
-    , "beta1_D": 0.9
+    "lr_G": 2e-4
     , "lr_scheme": "MultiStepLR"
-    , "lr_steps": [50000, 100000, 200000, 300000]
+    , "lr_steps": [200000, 400000, 600000, 800000]
     , "lr_gamma": 0.5
 
     , "pixel_criterion": "l1"
-    , "pixel_weight": 1e-2
-    , "feature_criterion": "l1"
-    , "feature_weight": 1
-    , "gan_type": "vanilla"
-    , "gan_weight": 5e-3
-
-    , "which_state": "a"  // a / b
-
-    //for wgan-gp
-    // , "D_update_ratio": 1
-    // , "D_init_iters": 0
-    // , "gp_weigth": 10
+    , "pixel_weight": 1.0
+    , "val_freq": 5e3
 
     , "manual_seed": 0
-    , "niter": 5e5
-    , "val_freq": 5e3
+    , "niter": 1e6
   }
 
   , "logger": {

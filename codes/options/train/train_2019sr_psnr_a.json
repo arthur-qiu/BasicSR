@@ -1,5 +1,5 @@
 {
-  "name": "2019SR_Before" //  please remove "debug_" during training
+  "name": "AFLPSNR_a_x1" //  please remove "debug_" during training
   , "use_tb_logger": true
   , "model":"aflgan"
   , "scale": 1
@@ -13,8 +13,8 @@
       , "dataroot_LR": "/mnt/lustrenew/qiuhaonan/2019sr/train_lrsub"
       , "subset_file": null
       , "use_shuffle": true
-      , "n_workers": 2
-      , "batch_size": 2
+      , "n_workers": 4
+      , "batch_size": 4
       , "HR_size": 128
       , "use_flip": true
       , "use_rot": true
@@ -29,7 +29,7 @@
 
   , "path": {
     "root": "/mnt/lustrenew/qiuhaonan/BasicSR"
-    , "pretrain_model_G": null
+    , "pretrain_model_G": "../experiments/AFLPSNR_x1/models/100000_G.pth"
   }
 
   , "network_G": {

@@ -10,8 +10,8 @@ from utils.progress_bar import ProgressBar
 
 def main():
     """A multi-thread tool to crop sub imags."""
-    input_folder = '/data/dn_night/output'
-    save_folder = '/data/dn_night/output512'
+    input_folder = '/data/dn_night/input'
+    save_folder = '/data/dn_night/input512'
     n_thread = 20
     crop_sz = 512 #128/192
     step = 512 #64/
