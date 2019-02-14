@@ -3,18 +3,18 @@
   , "use_tb_logger": true
   , "model":"srafl"
   , "scale": 1
-  , "gpu_ids": [0,1]
+  , "gpu_ids": [0,1,2,3]
 
   , "datasets": {
     "train": {
       "name": "DIV2K_train"
       , "mode": "LRHR"
-      , "dataroot_HR": "/mnt/lustrenew/qiuhaonan/2019sr/train_hrsub"
-      , "dataroot_LR": "/mnt/lustrenew/qiuhaonan/2019sr/train_lrsub"
+      , "dataroot_HR": "/mnt/lustrenew/qiuhaonan/2019sr/train_hr128"
+      , "dataroot_LR": "/mnt/lustrenew/qiuhaonan/2019sr/train_lr128"
       , "subset_file": null
       , "use_shuffle": true
-      , "n_workers": 4
-      , "batch_size": 4
+      , "n_workers": 8
+      , "batch_size": 8
       , "HR_size": 128
       , "use_flip": true
       , "use_rot": true
@@ -22,8 +22,8 @@
     , "val": {
       "name": "DIV2K_valid"
       , "mode": "LRHR"
-      , "dataroot_HR": "/mnt/lustrenew/qiuhaonan/2019sr/valid_lrsub"
-      , "dataroot_LR": "/mnt/lustrenew/qiuhaonan/2019sr/valid_lrsub"
+      , "dataroot_HR": "/mnt/lustrenew/qiuhaonan/2019sr/valid_lr128"
+      , "dataroot_LR": "/mnt/lustrenew/qiuhaonan/2019sr/valid_lr128"
     }
   }
 

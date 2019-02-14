@@ -1,5 +1,5 @@
 {
-  "name": "AFLPSNR_b_x1" //  please remove "debug_" during training
+  "name": "AFLPSNR_a1_x1" //  please remove "debug_" during training
   , "use_tb_logger": true
   , "model":"aflgan"
   , "scale": 1
@@ -30,7 +30,6 @@
   , "path": {
     "root": "/mnt/lustrenew/qiuhaonan/BasicSR"
     , "pretrain_model_G": "../experiments/AFLPSNR_a_x1/models/65000_G.pth"
-    , "pretrain_model_D": "../experiments/AFLPSNR_a_x1/models/65000_D.pth"
   }
 
   , "network_G": {
@@ -57,21 +56,21 @@
     "lr_G": 1e-4
     , "weight_decay_G": 0
     , "beta1_G": 0.9
-    , "lr_D": 1e-4
+    , "lr_D": 0
     , "weight_decay_D": 0
     , "beta1_D": 0.9
     , "lr_scheme": "MultiStepLR"
     , "lr_steps": [50000, 100000, 200000, 300000]
     , "lr_gamma": 0.5
 
-    , "pixel_criterion": "l1"
+    , "pixel_criterion": "l2"
     , "pixel_weight": 1e-2
     , "feature_criterion": "l1"
-    , "feature_weight": 1
+    , "feature_weight": 0
     , "gan_type": "vanilla"
-    , "gan_weight": 5e-3
+    , "gan_weight": 0
 
-    , "which_state": "b"  // a / b
+    , "which_state": "a"  // a / b
 
     //for wgan-gp
     // , "D_update_ratio": 1

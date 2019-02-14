@@ -167,7 +167,7 @@ def define_B(opt):
     gpu_ids = opt['gpu_ids']
     opt_Gnet = opt['network_G']
     opt_Dnet = opt['network_D']
-    netB = arch.BackFeeder(in_nc=opt_Dnet['nf']*4,base_nf=opt_Dnet['nf']*2,out_nc=opt_Gnet['nf'])
+    netB = arch.BackFeeder(in_nc=opt_Dnet['nf'],base_nf=opt_Dnet['nf']//2,out_nc=opt_Gnet['nf'])
 
     init_weights(netB, init_type='kaiming', scale=1)
     if gpu_ids:

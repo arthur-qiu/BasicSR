@@ -134,6 +134,13 @@ class Discriminator_VGG_128_AFL(nn.Module):
         # 128, 64
         conv0 = B.conv_block(in_nc, base_nf, kernel_size=3, norm_type=None, act_type=act_type, \
             mode=mode)
+
+        conv01 = B.conv_block(base_nf, base_nf, kernel_size=3, stride=1, norm_type=norm_type, \
+                             act_type=act_type, mode=mode)
+
+        conv02 = B.conv_block(base_nf, base_nf, kernel_size=3, stride=1, norm_type=norm_type, \
+                             act_type=act_type, mode=mode)
+
         conv1 = B.conv_block(base_nf, base_nf, kernel_size=4, stride=2, norm_type=norm_type, \
             act_type=act_type, mode=mode)
         # 64, 64
@@ -157,9 +164,12 @@ class Discriminator_VGG_128_AFL(nn.Module):
         conv9 = B.conv_block(base_nf*8, base_nf*8, kernel_size=4, stride=2, norm_type=norm_type, \
             act_type=act_type, mode=mode)
         # 4, 512
-        self.features1 = B.sequential(conv0, conv1, conv2, conv3, conv4)
+        # self.features1 = B.sequential(conv0, conv1, conv2, conv3, conv4)
+        #
+        # self.features2 = B.sequential(conv5, conv6, conv7, conv8, conv9)
+        self.features1 = B.sequential(conv0, conv01, conv02)
 
-        self.features2 = B.sequential(conv5, conv6, conv7, conv8, conv9)
+        self.features2 = B.sequential(conv1, conv2, conv3, conv4, conv5, conv6, conv7, conv8, conv9)
 
         # classifier
         self.classifier = nn.Sequential(
